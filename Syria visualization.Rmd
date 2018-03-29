@@ -1,0 +1,280 @@
+---
+title: "SyriaData_visualization"
+author: "Flora Li"
+date: "December 6, 2016"
+output: pdf_document
+---
+
+```{r,"loading data"}
+D2 <- read.csv("D2.csv")
+D8 <- read.csv("D8.csv")
+D9 <- read.csv("D9.csv")
+D2 <- D2[,-c(1:6)]
+D8 <- D8[,-c(1:6)]
+D9 <- D9[,-c(1:6)]
+```
+1. In the first part, I want to explore whether the factor "household number" will influence people's perception towards social activities or not. I draw two types of plot, boxplot and scatterplot. It seems the boxplot is more straightforward and we can get some interesting findings from the boxplot. However, for the scatterplot, it's hard for us to get any findings from it.
+
+(1) Do members of your family organize activities in your community?
+```{r,"Plotting houshold"}
+# D2 social.activities_yesno vs household_member
+library(ggplot2)
+plot(D2$activities_hobbies_social.activities_yesno,D2$household.household_member)
+D2_plot1 <- ggplot(
+  D2,
+  aes(
+  x = D2$activities_hobbies_social.activities_yesno,
+  y = D2$household.household_member
+  )
+  )
+
+
+# D8 social.activities_yesno vs household_member
+plot(D8$activities_hobbies_social.activities_yesno,D8$household.household_member)
+D8_plot1 <- ggplot(
+  D8,
+  aes(
+  x = D8$activities_hobbies_social.activities_yesno,
+  y = D8$household.household_member
+  )
+  )
+D8_plot1 + geom_point(color="purple")
+
+# D9 social.activities_yesno vs household_member
+plot(D9$activities_hobbies_social.activities_yesno,D9$household.household_member)
+D9_plot1 <- ggplot(
+  D9,
+  aes(
+  x = D9$activities_hobbies_social.activities_yesno,
+  y = D9$household.household_member
+  )
+  )
+D9_plot1 + geom_point(color="purple")
+```
+Based on the plots, we can find out for District 2(D2),for the group that family members will organize activities in community, their household number concentrated in the interval 3 to 11.For distict 8, it's 1 to 10.For District 9,it's 2 to 10. The bold line in the boxplot means the average number. When we comparing the average number, we can find out the household number only have very slightly influence on people's perception toward the question"Do members of your family organize activities in your community?" .
+
+(2)Do members of your household volunteer for organizations in the camp?
+```{r,"volunteer vs household"}
+# D2 volunteer_yesno vs household_member
+plot(D2$activities_hobbies_social.volunteer_yesno,D2$household.household_member)
+plot(D8$activities_hobbies_social.volunteer_yesno,D8$household.household_member)
+plot(D9$activities_hobbies_social.volunteer_yesno,D9$household.household_member)
+```
+Based on the plots,  it seems the household number only have very slightly influence on people's perception toward the question "Do members of your household volunteer for organizations in the camp?"
+
+(3)The following plots explore the relationship between the household number and social activity frequency.
+```{r,"frequency"}
+# social.activity_frequency vs household_member
+plot(
+  D2$activities_hobbies_social.activity_frequency,
+  D2$household.household_member,
+  xlab = "Social Activity Frequency",
+  ylab = "household number"
+  )
+plot(
+  D8$activities_hobbies_social.activity_frequency,
+  D8$household.household_member,
+  xlab = "Social Activity Frequency",
+  ylab = "household number"
+  )
+plot(
+  D9$activities_hobbies_social.activity_frequency,
+  D9$household.household_member,
+  xlab = "Social Activity Frequency",
+  ylab = "household number"
+  )
+
+```
+In conlusion, for this part, I didn't find any obvious differences between these groups. There are three reasons to lead to this result. First, I think it's because we don't have enough data, if we get more data perhaps we can see a more obvious trendings from these plots. Another possibility is the household number would have important influence on another variables in this dataset, but I didn't plot. In the future, I think I should draw more plot between household number and other variables to check my assumption. The last reason would be the limitation of boxplot.In other word, perhaps the boxplot is not the best way to show the relationship between these variables. So in the future, I can try other visualization plot to show the relationship between them.
+
+
+2. For the second part, I used the stacked bar graph to plot the data because both of the two variables I want to investigate are categorical variables. Stacked bar graph can help us to explore the relationship between two categorical variables.
+
+```{r,"stacked bar graph"}
+############stacked bar graph
+############D2
+# social.activity_frequency vs social.volunteer_yesno
+plot(
+  D2$activities_hobbies_social.activity_frequency,
+  D2$activities_hobbies_social.volunteer_yesno,
+  ylab = "Activiy Frequency",
+  xlab = "Do members of your household volunteer for organizations at the camp?"
+  )
+  
+plot(
+  D8$activities_hobbies_social.volunteer_yesno,
+  D8$activities_hobbies_social.activity_frequency,
+  ylab = "Activiy Frequency",
+  xlab = "Do members of your household volunteer for organizations at the camp?"
+  )
+plot(
+  D9$activities_hobbies_social.volunteer_yesno,
+  D9$activities_hobbies_social.activity_frequency,
+  ylab = "Activiy Frequency",
+  xlab = "Do members of your household volunteer for organizations at the camp?"
+  )
+
+# Education level vs Volunteer_yesno
+plot(
+  D2$education_skills.high_education,
+  D2$activities_hobbies_social.volunteer_yesno,
+  xlab = "Education Level",
+  ylab = "Do members of your household volunteer for organizations at the camp?"
+  )
+
+plot(
+  D8$education_skills.high_education,
+  D8$activities_hobbies_social.volunteer_yesno,
+  xlab = "Education Level",
+  ylab = "Do members of your household volunteer for organizations at the camp?"
+  )
+
+plot(
+  D9$education_skills.high_education,
+  D9$activities_hobbies_social.volunteer_yesno,
+  xlab = "Education Level",
+  ylab = "Do members of your household volunteer for organizations at the camp?"
+  )
+  
+
+# Education level vs social.activity_frequency
+plot(D2$education_skills.high_education,D2$activities_hobbies_social.activity_frequency)
+plot(D8$education_skills.high_education,D8$activities_hobbies_social.activity_frequency)
+plot(D9$education_skills.high_education,D9$activities_hobbies_social.activity_frequency)
+
+# education level vs activities_yesno
+plot(
+  D2$education_skills.high_education,
+  D2$activities_hobbies_social.activities_yesno,
+  xlab = "Education level",
+  ylab = "Do your family members organize activities?"
+  )
+plot(
+  D8$education_skills.high_education,
+  D8$activities_hobbies_social.activities_yesno,
+  xlab = "Education level",
+  ylab = "Do your family members organize activities?"
+  )
+plot(
+  D9$education_skills.high_education,
+  D9$activities_hobbies_social.activities_yesno,
+  xlab = "Education level",
+  ylab = "Do your family members organize activities?"
+  )
+
+# Education level vs spare time offering to community
+plot(
+  D2$education_skills.high_education,
+  D2$time.spare_time,
+  xlab = "Education Level",
+  ylab = "Do you have spare time to offer your community?"
+  )
+plot(
+  D8$education_skills.high_education,
+  D8$time.spare_time,
+  xlab = "Education Level",
+  ylab = "Do you have spare time to offer your community?"
+  )
+plot(
+  D9$education_skills.high_education,
+  D9$time.spare_time,
+  xlab = "Education Level",
+  ylab = "Do you have spare time to offer your community?"
+  )
+
+# activities_yesno vs volunteer_yesno
+plot(
+  D2$activities_hobbies_social.volunteer_yesno,
+  D2$activities_hobbies_social.activities_yesno,
+  xlab = "Do members of your household volunteer for organizations at the camp?",
+  ylab = "Do your family members organize activities?"
+  )
+plot(
+  D8$activities_hobbies_social.volunteer_yesno,
+  D8$activities_hobbies_social.activities_yesno,
+  xlab = "Do members of your household volunteer for organizations at the camp?",
+  ylab = "Do your family members organize activities?"
+  )
+plot(
+  D9$activities_hobbies_social.volunteer_yesno,
+  D9$activities_hobbies_social.activities_yesno,
+  xlab = "Do members of your household volunteer for organizations at the camp?",
+  ylab = "Do your family members organize activities?"
+  )
+
+# information/urban_info
+# 
+
+```
+
+
+
+```{r,"Best place to get information"}
+####### Top 2 places to get information 
+####### 1.relative home 2.neighbor home
+####### Best place to get information-relative home
+plot(
+  D2$education_skills.high_education,
+  D2$information.information_places.relative_home,
+  xlab = "Education Level",
+  ylab = "Best place to get information-relative home"
+  )
+plot(
+  D8$education_skills.high_education,
+  D8$information.information_places.relative_home,
+  xlab = "Education Level",
+  ylab = "Best place to get information-relative home"
+  )
+
+plot(
+  D9$education_skills.high_education,
+  D9$information.information_places.relative_home,
+  xlab = "Education Level",
+  ylab = "Best place to get information-relative home"
+  )
+####### Best place to get information-neighbor_home
+plot(
+  D2$education_skills.high_education,
+  D2$information.information_places.neighbor_home,
+  xlab = "Education Level",
+  ylab = "Best place to get information-relative home"
+  )
+plot(
+  D8$education_skills.high_education,
+  D8$information.information_places.neighbor_home,
+  xlab = "Education Level",
+  ylab = "Best place to get information-relative home"
+  )
+
+plot(
+  D9$education_skills.high_education,
+  D9$information.information_places.neighbor_home,
+  xlab = "Education Level",
+  ylab = "Best place to get information-relative home"
+  )
+```
+
+
+3. For the third part, I want to use Mosaic plot to exhibit the relationship between three categorical variables.
+```{r,"testing"}
+# time/spare_time vs time/interest_offer_time
+plot(
+  D8$time.spare_time,
+  interestoffertime,
+  xlab = "Do you have spare time to offer your community?",
+  ylab = "How interested would you be in offering your spare time?"
+  )
+D8$NewD8 <- ifelse(D8$time.interest_offer_time <= 1 ,"Not interested", ifelse(D8$time.interest_offer_time <= 2,"Moderately","Very much"))
+df$x <- paste(df$n,df$s)
+
+
+```
+
+
+```{r,"Mosaicplot testing"}
+# Mosaicplot testing
+# http://www.exegetic.biz/blog/2013/05/introducing-r-plottin-categorical-variables/
+# using library plotly would be more beautiful
+
+```
+
