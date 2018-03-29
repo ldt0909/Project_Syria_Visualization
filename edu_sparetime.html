@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['sankey']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'From');
+        data.addColumn('string', 'To');
+        data.addColumn('number', 'Weight');
+        data.addRows([
+["elementary","a_little",18],
+["elementary","a_lot",3],
+["elementary","none",5],
+["elementary","some",2],
+["finished_university","a_little",2],
+["finished_university","a_lot",5],
+["finished_university","none",1],
+["finished_university","some",6],
+["high","a_little",5],
+["high","a_lot",7],
+["high","none",5],
+["high","some",7],
+["master","a_little",1],
+["master","some",2],
+["middle","a_little",11],
+["middle","a_lot",1],
+["middle","none",10],
+["middle","some",12],
+["some_university","a_little",4],
+["some_university","a_lot",3],
+["some_university","none",2]
+
+       ]);
+
+        // Sets chart options.
+        var options = {
+          width: 600,
+        };
+
+        // Instantiates and draws our chart, passing in some options.
+        var chart = new google.visualization.Sankey(document.getElementById('sankey_basic'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="sankey_basic" style="width: 900px; height: 300px;"></div>
+  </body>
+</html>
